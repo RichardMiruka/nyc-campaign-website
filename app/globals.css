@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --green-deep:  #1A5C38;
+  --green-mid:   #2E7D52;
+  --green-light: #E8F5EE;
+  --gold:        #D4A017;
+  --gold-light:  #FEF3C7;
+  --navy:        #0D1B40;
+  --cream:       #FAFAF7;
+  --charcoal:    #1a1a1a;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--charcoal);
+  overflow-x: hidden;
+}
+
+.font-display { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.04em; }
+.font-serif   { font-family: 'Playfair Display', serif; }
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.reveal { opacity:0; transform:translateY(28px); transition:opacity .7s ease,transform .7s ease; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+.reveal-d1 { transition-delay:.1s; }
+.reveal-d2 { transition-delay:.2s; }
+.reveal-d3 { transition-delay:.3s; }
+.reveal-d4 { transition-delay:.4s; }
+
+@keyframes shimmer {
+  0%   { background-position:-200% center; }
+  100% { background-position:200% center; }
+}
+.gold-shimmer {
+  background: linear-gradient(90deg,#D4A017 0%,#f5d06a 50%,#D4A017 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s linear infinite;
+}
+
+@keyframes pulse-ring {
+  0%   { box-shadow: 0 0 0 0 rgba(212,160,23,.5); }
+  70%  { box-shadow: 0 0 0 14px rgba(212,160,23,0); }
+  100% { box-shadow: 0 0 0 0 rgba(212,160,23,0); }
+}
+.pulse-gold { animation: pulse-ring 2.5s ease-out infinite; }
+
+@keyframes marquee { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+.marquee-inner { animation: marquee 35s linear infinite; display:flex; white-space:nowrap; }
+.marquee-inner:hover { animation-play-state:paused; }
+
+::-webkit-scrollbar { width:5px; }
+::-webkit-scrollbar-track { background:#0D1B40; }
+::-webkit-scrollbar-thumb { background:#D4A017; border-radius:3px; }
+
+.flag-stripe {
+  background: linear-gradient(90deg,#000 33.3%,#CE1126 33.3%,#CE1126 66.6%,#006600 66.6%);
+  height: 3px;
+}
+
+.diagonal-bg {
+  background-image: repeating-linear-gradient(
+    -45deg, transparent, transparent 12px,
+    rgba(26,92,56,.025) 12px, rgba(26,92,56,.025) 24px
+  );
+}
