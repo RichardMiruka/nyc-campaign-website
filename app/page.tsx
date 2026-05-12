@@ -18,7 +18,7 @@ const NAV_LINKS = [
 ];
 
 const STATS: Stat[] = [
-  { value: "67%",    label: "Youth unemployment aged 15–34", source: "Afrobarometer 2025" },
+  { value: "67%",    label: "Youth unemployment aged 18–34", source: "Afrobarometer 2025" },
   { value: "43%",    label: "Youth considering emigrating",  source: "Afrobarometer 2025" },
   { value: "79%",    label: "Say govt fails youth needs",    source: "GeoPoll 2025" },
   { value: "73%",    label: "Ward ICT hubs not yet built",   source: "April 2026" },
@@ -32,10 +32,12 @@ const PILLARS: Pillar[] = [
     title: "Connect Kenya",
     color: "#0D1B40",
     items: [
-      "Ward-by-ward Digital Superhighway accountability dashboard",
-      "Mandatory Ajira Digital registration at every ICT hub",
-      "Accelerated hub deployment in underserved counties",
-      "Remove digital asset loan barriers for youth",
+      "Ward-by-ward Digital Superhighway accountability dashboard to track connectivity and infrastructure progress",
+      "Mandatory Ajira Digital registration and onboarding at every public ICT hub, TVET and youth centre",
+      "Accelerated deployment, equipping and maintenance of ICT hubs in underserved wards and counties",
+      "Advocate for the removal of barriers to youth access to laptops, devices and digital asset financing",
+      "Nationwide digital literacy, cybersecurity and online safety training for youth and community groups",
+      "Public-private partnerships to expand affordable internet access, devices and innovation spaces",
     ],
   },
   {
@@ -43,10 +45,12 @@ const PILLARS: Pillar[] = [
     title: "Skills for the Future",
     color: "#1A5C38",
     items: [
-      "Emergency TVET trainer recruitment — fill 9,121 vacancies",
-      "AI literacy in every Ajira & TVET curriculum",
-      "Ward-level Ajira Digital drives nationwide",
-      "3–6 month fast-track CBET certificates in all counties",
+      "Advocate for urgent recruitment of TVET trainers to address the existing staffing gap across the country",
+      "Integrate Artificial Intelligence, coding, data skills and digital entrepreneurship into Ajira and TVET curricula",
+      "Coordinate ward-level Ajira Digital outreach and job-readiness campaigns in all 290 constituencies",
+      "Expand 3–6 month Competency-Based Education and Training (CBET) programmes aligned to market demand",
+      "Strengthen mentorship, internship and apprenticeship pathways linking youth to industry",
+      "Promote recognition of prior learning so self-taught youth can earn nationally recognized certifications",
     ],
   },
   {
@@ -54,10 +58,12 @@ const PILLARS: Pillar[] = [
     title: "Capital in Young Hands",
     color: "#B8860B",
     items: [
-      "Reform YEDF eligibility — remove title deed barriers",
-      "Digital assets as YEDF & NYOTA eligible investments",
-      "Raise NYOTA age ceiling from 29 to 35",
-      "Transparent county-level youth fund portals",
+      "Advocate for reforms to Youth Enterprise Development Fund eligibility to remove unnecessary collateral barriers",
+      "Recognize laptops, software, digital tools and online businesses as eligible youth investments",
+      "Support expansion of programmes such as NYOTA to include all youth up to 35 years",
+      "Promote transparent county-level youth fund portals to track applications, approvals and disbursements",
+      "Increase financial literacy and business development support for youth-led enterprises",
+      "Strengthen market linkages so funded youth businesses can scale sustainably",
     ],
   },
   {
@@ -65,10 +71,12 @@ const PILLARS: Pillar[] = [
     title: "Youth in Every Room",
     color: "#7B0000",
     items: [
-      "NYC representation in national budget process",
-      "Annual Youth State of the Nation Report",
-      "Youth reps on all 47 county executive committees",
-      "Formal Gen Z Policy Dialogue mechanism",
+      "Institutionalize meaningful youth participation in national and county planning and budget processes",
+      "Publish an Annual Youth State of the Nation Report highlighting progress, challenges and recommendations",
+      "Advocate for structured youth advisory representation across all 47 counties",
+      "Establish a formal intergenerational policy dialogue mechanism to engage young people and decision-makers",
+      "Strengthen the National Youth Council as an accountable and effective voice for all Kenyan youth",
+      "Promote civic education so young people understand and influence public policy",
     ],
   },
   {
@@ -76,10 +84,12 @@ const PILLARS: Pillar[] = [
     title: "Whole-Person Leadership",
     color: "#2E7D52",
     items: [
-      "Youth mental health as national NYC priority",
-      "Ward-level peer support structures nationwide",
-      "Social media literacy in Ajira & TVET curricula",
-      "Gender equity audits of all youth programmes",
+      "Elevate youth mental health and psychosocial support as a national priority",
+      "Promote ward-level peer support and mentorship networks across the country",
+      "Integrate social media literacy, digital citizenship and responsible online engagement into youth programmes",
+      "Advocate for gender-responsive and inclusive audits of all youth programmes",
+      "Support sports, arts and community service as pathways for leadership development",
+      "Champion integrity, accountability and values-based leadership among young people",
     ],
   },
 ];
