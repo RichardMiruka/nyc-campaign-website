@@ -374,16 +374,16 @@ export default function Home() {
             </div>
             <h2 className="font-display text-5xl md:text-6xl mb-6 leading-tight"
               style={{ color: "var(--navy)" }}>
-              I WAS SHAPED<br />
-              <span style={{ color: "var(--green-deep)" }}>BY KIBERA.</span><br />
-              I AM RUNNING<br />
-              FOR ALL OF KENYA.
+              I WAS RAISED & SHAPED<br />
+              <span style={{ color: "var(--green-deep)" }}>BY SERVICE IN VULNERABLE & UNDERSERVED COMMUNITIES.</span><br />
+              I AM RUNNING TO REPRESENT<br />
+              THE MANY IN ALL OF KENYA.
             </h2>
             <p className="text-gray-600 text-lg leading-relaxed mb-6">
-              I am a <strong>Full Stack Software Engineer, ICT Instructor</strong> and community volunteer. I have spent three years teaching digital skills at Ta'awun Trust Vocational College — web development, cybersecurity, and ICT fundamentals — watching young people transform when they get real tools.
+              I am a <strong>Full Stack Software Engineer, Technical Mentor</strong> and community volunteer. I have spent five years supporting literacy and digital skills in Kenya — From Web development, cybersecurity, and ICT fundamentals — watching young people transform when they get real tools.
             </p>
             <p className="text-gray-600 text-lg leading-relaxed mb-8">
-              I have organised football tournaments, led youth chairs, volunteered in food distribution and scholarship drives, and mentored young people without waiting for permission. <strong>Service without a title has been my career. I am now seeking a title to scale that service nationally.</strong>
+              I have organized youth meetups and dialogues, led youth communities, volunteered in schools and scholarship drives, and mentored young people without waiting for permission. <strong>Service without a title has been my career. I am now seeking a title to scale that service nationally.</strong>
             </p>
             <div className="grid grid-cols-2 gap-4">
               {[
