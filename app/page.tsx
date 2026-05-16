@@ -751,9 +751,10 @@ export default function Home() {
               ))}
               <div className="flex gap-4 pt-4">
                 {[
-                  { label: "X / Twitter", href: "https://twitter.com/richardmiruka" },
-                  { label: "Instagram",   href: "https://instagram.com/richardmiruka" },
-                  { label: "TikTok",      href: "https://tiktok.com/@richardmiruka" },
+                  { label: "X / Twitter", href: "https://twitter.com/richardmiruka96" },
+                  { label: "Instagram", href: "https://www.instagram.com/richard.miruka.onsare/" }, 
+                  { label: "TikTok",      href: "https://tiktok.com/@richy_miruka96" },
+                  { label: "LinkedIn", href: "https://www.linkedin.com/in/richard-miruka-05083b147/" },
                 ].map((s, i) => (
                   <a key={i} href={s.href} target="_blank" rel="noopener noreferrer"
                     className="flex-1 text-center py-3 rounded-lg text-sm font-bold transition-all duration-200 hover:scale-105"
