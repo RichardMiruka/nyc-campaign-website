@@ -351,7 +351,7 @@ export default function Home() {
           <div className="reveal text-center mb-12">
             <div className="font-display text-4xl md:text-5xl text-white mb-3">THE CRISIS WE MUST NAME</div>
             <p className="text-gray-400 max-w-2xl mx-auto">
-              Kenya cannot afford polite conversations about a crisis that is burning. These are the numbers; and every one represents a young Kenyan whose potential is being wasted.
+              Kenya cannot afford polite conversations about a crisis that is burning. These are the real numbers; and every one represents a young Kenyan whose potential is being wasted.
             </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-0 border border-white/10 rounded-xl overflow-hidden">
@@ -377,7 +377,7 @@ export default function Home() {
               I HAVE BEEN SHAPED<br />
               <span style={{ color: "var(--green-deep)" }}>BY YEARS OF SERVICE IN VULNERABLE & UNDERSERVED COMMUNITIES.</span><br />
               I AM RUNNING TO REPRESENT THE ASPIRATIONS OF <br />
-               YOUNG PEOPLE IN KENYA.
+               THE YOUNG PEOPLE IN KENYA.
             </h2>
             <p className="text-gray-600 text-lg leading-relaxed mb-6">
               I am a <strong>Full Stack Software Engineer, Technical Mentor</strong> and community volunteer. I have spent five years supporting literacy and digital skills in Kenya — From Web development, networking, cybersecurity, and ICT fundamentals — watching young people transform when they get real tools.
@@ -454,14 +454,14 @@ export default function Home() {
             <p className="text-lg mb-12" style={{ color: "rgba(255,255,255,0.7)" }}>
               Grounded in the <strong className="text-white">National Youth Council Act, Cap. 132</strong>. 
               Powered by Kenya's <strong className="text-white">Digital Superhighway</strong>. 
-              For every county. For every ward. For every young Kenyan.
+              For every county, constituency and every ward. For each and every young Kenyan.
             </p>
           </div>
           <div className="reveal reveal-d2 grid md:grid-cols-3 gap-6">
             {[
-              { icon: "⚖️", title: "Legally Grounded", body: "Every commitment traces directly to the NYC Act Section 5 mandates. Not political promises — statutory obligations." },
-              { icon: "📡", title: "Tech-Powered",     body: "The Digital Superhighway is Kenya's biggest youth investment. My mission: ensure it reaches every ward, not just cities." },
-              { icon: "🌍", title: "Nationally Scaled", body: "This campaign starts in Makina but the agenda is for all 47 counties. No young Kenyan left behind." },
+              { icon: "⚖️", title: "Legally Grounded", body: "Every commitment traces directly to the NYC Act Section 5 mandates. Not political promises but statutory obligations." },
+              { icon: "📡", title: "Tech-Powered",     body: "The Digital Superhighway is Kenya's biggest youth investment. My mission is to ensure it reaches every ward, not just in the towns & cities." },
+              { icon: "🌍", title: "Nationally Scaled", body: "This campaign starts in the grassroot level in Makina but the agenda is for all 47 counties. No young Kenyan is left behind." },
             ].map((item, i) => (
               <div key={i} className="p-6 rounded-xl text-left"
                 style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.12)" }}>
@@ -486,7 +486,7 @@ export default function Home() {
               MY NATIONAL AGENDA
             </h2>
             <p className="text-gray-500 max-w-2xl mx-auto">
-              Five priorities. Each grounded in law, data and lived experience. Measurable. Accountable. For every county in Kenya.
+              I have five priorities. Each grounded in law, data and lived experience. Measurable. Accountable. For every county in Kenya.
             </p>
           </div>
           <div className="space-y-6">
