@@ -110,7 +110,7 @@ const TESTIMONIALS: Testimonial[] = [
 ];
 
 const MARQUEE_TEXT = [
-  "YOUTH VOICE", "YOUTH POWER", "BETTER TOMORROW", "SISI NI PAMOJA",
+  "YOUTH VOICE", "YOUTH POWER", "A BETTER TOMORROW", "SISI NI PAMOJA",
   "MAKINA WARD", "KIBRA CONSTITUENCY", "NATIONAL YOUTH COUNCIL",
   "5 JULY 2026", "REGISTER & VOTE", "ONE NATION ONE FUTURE",
 ];
@@ -261,13 +261,13 @@ export default function Home() {
             </h1>
 
             <p className="font-serif text-xl md:text-2xl mb-8 italic" style={{ color: "rgba(255,255,255,0.8)" }}>
-              Better Tomorrow — for every young Kenyan.
+              A Better Tomorrow for every young Kenyan.
             </p>
 
             <div className="mb-8">
               <div className="font-display text-2xl md:text-3xl text-white mb-1">RICHARD MIRUKA</div>
               <div className="text-sm tracking-widest" style={{ color: "#D4A017" }}>
-                SOFTWARE ENGINEER  •  ICT INSTRUCTOR  •  YOUTH LEADER
+                SOFTWARE ENGINEER  •  TECHNICAL MENTOR  •  YOUTH LEADER
               </div>
             </div>
 
@@ -351,7 +351,7 @@ export default function Home() {
           <div className="reveal text-center mb-12">
             <div className="font-display text-4xl md:text-5xl text-white mb-3">THE CRISIS WE MUST NAME</div>
             <p className="text-gray-400 max-w-2xl mx-auto">
-              Kenya cannot afford polite conversations about a crisis that is burning. These are the numbers — and every one represents a young Kenyan whose potential is being wasted.
+              Kenya cannot afford polite conversations about a crisis that is burning. These are the numbers; and every one represents a young Kenyan whose potential is being wasted.
             </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-0 border border-white/10 rounded-xl overflow-hidden">
@@ -374,23 +374,23 @@ export default function Home() {
             </div>
             <h2 className="font-display text-5xl md:text-6xl mb-6 leading-tight"
               style={{ color: "var(--navy)" }}>
-              I WAS RAISED & SHAPED<br />
-              <span style={{ color: "var(--green-deep)" }}>BY SERVICE IN VULNERABLE & UNDERSERVED COMMUNITIES.</span><br />
-              I AM RUNNING TO REPRESENT<br />
-              THE MANY IN ALL OF KENYA.
+              I HAVE BEEN SHAPED<br />
+              <span style={{ color: "var(--green-deep)" }}>BY YEARS OF SERVICE IN VULNERABLE & UNDERSERVED COMMUNITIES.</span><br />
+              I AM RUNNING TO REPRESENT THE ASPIRATIONS OF <br />
+               YOUNG PEOPLE IN KENYA.
             </h2>
             <p className="text-gray-600 text-lg leading-relaxed mb-6">
-              I am a <strong>Full Stack Software Engineer, Technical Mentor</strong> and community volunteer. I have spent five years supporting literacy and digital skills in Kenya — From Web development, cybersecurity, and ICT fundamentals — watching young people transform when they get real tools.
+              I am a <strong>Full Stack Software Engineer, Technical Mentor</strong> and community volunteer. I have spent five years supporting literacy and digital skills in Kenya — From Web development, networking, cybersecurity, and ICT fundamentals — watching young people transform when they get real tools.
             </p>
             <p className="text-gray-600 text-lg leading-relaxed mb-8">
-              I have organized youth meetups and dialogues, led youth communities, volunteered in schools and scholarship drives, and mentored young people without waiting for permission. <strong>Service without a title has been my career. I am now seeking a title to scale that service nationally.</strong>
+              I have organized youth meetups and dialogues, led youth communities, volunteered in schools and scholarship drives, and mentored young people without waiting for permission. <strong>Service without a title has been my career. I am now seeking an opportunity to scale that service nationally.</strong>
             </p>
             <div className="grid grid-cols-2 gap-4">
               {[
-                { icon: "💻", label: "Software Engineer",    sub: "Full Stack" },
-                { icon: "📚", label: "ICT Instructor",       sub: "Ta'awun Trust" },
-                { icon: "⚽", label: "Community Leader",     sub: "Football & Youth" },
-                { icon: "🎓", label: "Technical Mentor",     sub: "Digital Skills" },
+                { icon: "💻", label: "Software Engineer", sub: "Full Stack Development" },
+                { icon: "📚", label: "ICT Instructor", sub: "Digital Skills Training" },
+                { icon: "⚽", label: "Community Leader", sub: "Youth Leadership & Empowerment" },
+                { icon: "🎓", label: "Technical Mentor", sub: "Career & Skills Development" },
               ].map((item, i) => (
                 <div key={i} className="flex items-center gap-3 p-4 rounded-xl"
                   style={{ background: "var(--green-light)" }}>
@@ -449,7 +449,7 @@ export default function Home() {
               MY NATIONAL VISION
             </div>
             <h2 className="font-serif text-3xl md:text-5xl leading-tight mb-8" style={{ color: "white" }}>
-              "A Kenya where every young person — regardless of county, gender, disability or economic background — has access to the skills, capital, connectivity and civic space to build a dignified life and shape the nation's future."
+              "A Kenya where every young person regardless of county, gender, disability or economic background — has access to the skills, capital, connectivity and civic space to build a dignified life and shape the nation's future."
             </h2>
             <p className="text-lg mb-12" style={{ color: "rgba(255,255,255,0.7)" }}>
               Grounded in the <strong className="text-white">National Youth Council Act, Cap. 132</strong>. 
@@ -715,7 +715,7 @@ export default function Home() {
               style={{ background: "#D4A017", color: "#0D1B40" }}>
               Register at NYC Website →
             </a>
-            <a href="tel:+254700000000"
+            <a href="tel:+254700129706"
               className="px-10 py-4 rounded-xl font-bold text-lg border-2 text-white transition-all duration-300 hover:bg-white/10"
               style={{ borderColor: "rgba(255,255,255,0.4)" }}>
               Call the Campaign Team
@@ -736,9 +736,9 @@ export default function Home() {
             <div className="space-y-6">
               {[
                 { icon: "📍", label: "Campaign Base",   value: "Makina Ward, Kibera, Nairobi" },
-                { icon: "📱", label: "WhatsApp",         value: "+254 [NUMBER]" },
-                { icon: "📧", label: "Email",            value: "campaign@richardmiruka.co.ke" },
-                { icon: "🌐", label: "Website",          value: "richardmiruka.co.ke" },
+                { icon: "📱", label: "WhatsApp",         value: "+254700129706" },
+                { icon: "📧", label: "Email",            value: "richard.miruka.dev@gmail.com" },
+                { icon: "🌐", label: "Website",          value: "richardmiruka.pw" },
               ].map((item, i) => (
                 <div key={i} className="flex items-start gap-4 p-4 rounded-xl"
                   style={{ background: "var(--green-light)" }}>
@@ -806,7 +806,7 @@ export default function Home() {
               <div className="font-display text-3xl text-white mb-2">RICHARD MIRUKA</div>
               <div className="text-xs tracking-widest mb-6" style={{ color: "#D4A017" }}>NATIONAL YOUTH COUNCIL 2026</div>
               <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.5)" }}>
-                Software Engineer. ICT Instructor. Youth Leader. Running to bring technical credibility, grassroots accountability and genuine youth advocacy to the National Youth Council.
+                Software Engineer. Technical Mentor. Youth Leader. Running to bring technical credibility, grassroots accountability and genuine youth advocacy to the National Youth Council.
               </p>
             </div>
             {/* Links */}
@@ -847,7 +847,7 @@ export default function Home() {
               © 2026 Richard Miruka Campaign. All rights reserved. | Grounded in the National Youth Council Act, Cap. 132
             </div>
             <div className="font-display text-sm" style={{ color: "#D4A017" }}>
-              SISI NI PAMOJA · ONE WARD · ONE CONSTITUENCY · ONE NATION · ONE FUTURE
+              SISI NI VIJANA PAMOJA · ONE VOICE · ONE MOVEMENT · ONE KENYA · ONE FUTURE
             </div>
           </div>
         </div>
