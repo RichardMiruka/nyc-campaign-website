@@ -11,6 +11,7 @@ import {
 import dynamic from 'next/dynamic';
 const Lottie = dynamic(() => import('lottie-react'), { ssr: false });
 import ballotAnimation from "@/public/ballot.json";
+import voteMeAnimation from "@/public/voteme.json";
 import HeroAsciiAnimation from "@/components/ui/hero-ascii-one";
 import { supabase } from "@/lib/supabase";
 
@@ -394,18 +395,10 @@ export default function Home() {
 
       {/* ── HERO ─────────────────────────────────────────────────────── */}
       <section className="relative min-h-[100dvh] flex items-center overflow-hidden">
-        <div className="absolute inset-0 bg-navy overflow-hidden">
-          {/* Mesh Gradient Orbs */}
-          <div className="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] bg-green-deep/20 blur-[120px] rounded-full" />
-          <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-gold/10 blur-[120px] rounded-full" />
-          
-          {/* Background grid */}
-          <div className="absolute inset-0 opacity-[0.03]"
-            style={{ backgroundImage: "linear-gradient(rgba(255,255,255,1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,1) 1px,transparent 1px)", backgroundSize: "80px 80px" }} />
-        </div>
+        <HeroAsciiAnimation />
 
         {/* Kenya flag accent */}
-        <div className="absolute top-0 left-0 right-0 h-1 flex">
+        <div className="absolute top-0 left-0 right-0 h-1 flex z-20">
           <div className="flex-1 bg-black" />
           <div className="flex-1 bg-red-600" />
           <div className="flex-1 bg-green-600" />
