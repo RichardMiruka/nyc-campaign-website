@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-06-12T12:00:00Z",
+  "title": "Design System: Richard Miruka Campaign 2026",
+  "extensions": {
+    "colorMeta": {
+      "navy": {
+        "role": "neutral",
+        "displayName": "Midnight Navy",
+        "canonical": "oklch(20% 0.04 260)",
+        "tonalRamp": ["#03060d", "#060d1f", "#0D1B40", "#1a3680", "#2651bf", "#4d79e6", "#8da9f0", "#cdd9f9"]
+      },
+      "golden": {
+        "role": "primary",
+        "displayName": "Golden",
+        "canonical": "oklch(70% 0.15 80)",
+        "tonalRamp": ["#2b2005", "#56410a", "#81610f", "#ab8114", "#D4A017", "#deba54", "#e8d391", "#f3ebce"]
+      },
+      "kenyan-green": {
+        "role": "secondary",
+        "displayName": "Kenyan Green",
+        "canonical": "oklch(40% 0.1 145)",
+        "tonalRamp": ["#05120b", "#0a2516", "#103821", "#154a2c", "#1A5C38", "#2ea262", "#72cda2", "#b9e6d1"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display (Bebas Neue)", "purpose": "Section headers and hero statements." },
+      "serif": { "displayName": "Serif (Playfair Display)", "purpose": "Quotes and visionary body text." },
+      "body": { "displayName": "Body (DM Sans)", "purpose": "Main content and policy details." }
+    },
+    "shadows": [
+      { "name": "card-lift", "value": "0 20px 40px rgba(0, 0, 0, 0.3)", "purpose": "Interactivity on premium cards." }
+    ],
+    "motion": [
+      { "name": "ease-premium", "value": "cubic-bezier(0.32, 0.72, 0, 1)", "purpose": "Main easing for transitions and reveals." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Golden Button",
+      "kind": "button",
+      "refersTo": "button-gold",
+      "description": "Primary action button with gradient and inner glow.",
+      "html": "<button class=\"ds-btn-gold\">REGISTER & VOTE</button>",
+      "css": ".ds-btn-gold { background: linear-gradient(135deg, #D4A017 0%, #B8860B 100%); color: white; padding: 12px 24px; border-radius: 12px; font-family: 'DM Sans', sans-serif; font-weight: 500; border: none; cursor: pointer; position: relative; overflow: hidden; transition: all 0.5s cubic-bezier(0.32, 0.72, 0, 1); } .ds-btn-gold::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 50%); opacity: 0; transition: opacity 0.5s ease; } .ds-btn-gold:hover::before { opacity: 1; } .ds-btn-gold:hover { transform: translateY(-2px); box-shadow: 0 20px 40px rgba(212, 160, 23, 0.3); }"
+    },
+    {
+      "name": "Premium Card",
+      "kind": "card",
+      "refersTo": "card-premium",
+      "description": "Translucent card with glass-morphism and hover lift.",
+      "html": "<div class=\"ds-card-premium\"><h3>Policy Pillar</h3><p>Detailed campaign promise goes here.</p></div>",
+      "css": ".ds-card-premium { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-radius: 12px; padding: 32px; border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.6s cubic-bezier(0.32, 0.72, 0, 1); } .ds-card-premium:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); border-color: rgba(255, 255, 255, 0.2); } .ds-card-premium h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 0.04em; color: #D4A017; margin-bottom: 8px; } .ds-card-premium p { font-family: 'DM Sans', sans-serif; font-size: 0.875rem; color: white; opacity: 0.8; }"
+    },
+    {
+      "name": "Eyebrow Tag",
+      "kind": "chip",
+      "description": "Small categorized tag for section labeling.",
+      "html": "<span class=\"ds-eyebrow\">NATIONAL PRIORITY</span>",
+      "css": ".ds-eyebrow { display: inline-flex; align-items: center; padding: 6px 16px; border-radius: 9999px; font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; font-weight: 500; background: rgba(212, 160, 23, 0.1); border: 1px solid rgba(212, 160, 23, 0.2); color: #D4A017; font-family: 'DM Sans', sans-serif; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Visionary Vanguard",
+    "overview": "The Visionary Vanguard is a design system built for high-stakes leadership and national representation. It balances the urgency of youth activism with the professional restraint of a serious policy platform. The aesthetic is 'Professional, Calm, and Policy-Focused.'",
+    "keyCharacteristics": [
+      "Authoritative Density: Information-rich layouts.",
+      "Strategic Contrast: Gold accents for critical actions.",
+      "Modern Heritage: Bold industrial display paired with trusted serif."
+    ],
+    "rules": [
+      { "name": "The Golden Ratio Rule", "body": "The Golden accent should never cover more than 5% of a screen's surface area. Its power comes from its rarity.", "section": "colors" },
+      { "name": "The No-Image-Animate Rule", "body": "Don't animate image transforms on hover; use the container's lift or border instead.", "section": "components" }
+    ],
+    "dos": [
+      "Do use text-wrap: balance on all section headers.",
+      "Do maintain a strict 4.5:1 contrast ratio for all body text.",
+      "Do use the doppelrand effect to give containers a premium, finished feel."
+    ],
+    "donts": [
+      "Don't use gold for large background areas; it is for guidance, not coverage.",
+      "Don't use generic 'SaaS gray' for text; use pure white or high-opacity transparencies.",
+      "Don't animate image transforms on hover."
+    ]
+  }
+}

@@ -1,6 +1,23 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Wifi, GraduationCap, Wallet, Landmark, Heart,
+  Vote, Award, BookOpen, Trophy, Scale, Globe,
+  FileText, MapPin, Phone, Mail, Laptop, PenTool, Users,
+  ArrowRight, CheckCircle2, AlertCircle
+} from "lucide-react";
+import { supabase } from "@/lib/supabase";
+
+// ── Icon mapping ───────────────────────────────────────────────────────────
+const iconMap: Record<string, React.ElementType> = {
+  wifi: Wifi,
+  graduation: GraduationCap,
+  wallet: Wallet,
+  landmark: Landmark,
+  heart: Heart,
+};
 
 // ── Types ──────────────────────────────────────────────────────────────────
 interface Pillar { icon: string; title: string; items: string[]; color: string; }
@@ -18,7 +35,7 @@ const NAV_LINKS = [
 ];
 
 const STATS: Stat[] = [
-  { value: "67%",    label: "Youth unemployment aged 18–34", source: "Afrobarometer 2025" },
+  { value: "67%",    label: "Youth unemployment aged 15–34", source: "Afrobarometer 2025" },
   { value: "43%",    label: "Youth considering emigrating",  source: "Afrobarometer 2025" },
   { value: "79%",    label: "Say govt fails youth needs",    source: "GeoPoll 2025" },
   { value: "73%",    label: "Ward ICT hubs not yet built",   source: "April 2026" },
@@ -28,68 +45,58 @@ const STATS: Stat[] = [
 
 const PILLARS: Pillar[] = [
   {
-    icon: "📡",
+    icon: "wifi",
     title: "Connect Kenya",
     color: "#0D1B40",
     items: [
-      "Ward-by-ward Digital Superhighway accountability dashboard to track connectivity and infrastructure progress",
-      "Mandatory Ajira Digital registration and onboarding at every public ICT hub, TVET and youth centre",
-      "Accelerated deployment, equipping and maintenance of ICT hubs in underserved wards and counties",
-      "Advocate for the removal of barriers to youth access to laptops, devices and digital asset financing",
-      "Nationwide digital literacy, cybersecurity and online safety training for youth and community groups",
-      "Public-private partnerships to expand affordable internet access, devices and innovation spaces",
+      "Ward-by-ward Digital Superhighway accountability dashboard",
+      "Mandatory Ajira Digital registration at every ICT hub",
+      "Accelerated hub deployment in underserved counties",
+      "Remove digital asset loan barriers for youth",
     ],
   },
   {
-    icon: "🎓",
+    icon: "graduation",
     title: "Skills for the Future",
     color: "#1A5C38",
     items: [
-      "Advocate for urgent recruitment of TVET trainers to address the existing staffing gap across the country",
-      "Integrate Artificial Intelligence, coding, data skills and digital entrepreneurship into Ajira and TVET curricula",
-      "Coordinate ward-level Ajira Digital outreach and job-readiness campaigns in all 290 constituencies",
-      "Expand 3–6 month Competency-Based Education and Training (CBET) programmes aligned to market demand",
-      "Strengthen mentorship, internship and apprenticeship pathways linking youth to industry",
-      "Promote recognition of prior learning so self-taught youth can earn nationally recognized certifications",
+      "Emergency TVET trainer recruitment — fill 9,121 vacancies",
+      "AI literacy in every Ajira & TVET curriculum",
+      "Ward-level Ajira Digital drives nationwide",
+      "3–6 month fast-track CBET certificates in all counties",
     ],
   },
   {
-    icon: "💰",
+    icon: "wallet",
     title: "Capital in Young Hands",
     color: "#B8860B",
     items: [
-      "Advocate for reforms to Youth Enterprise Development Fund eligibility to remove unnecessary collateral barriers",
-      "Recognize laptops, software, digital tools and online businesses as eligible youth investments",
-      "Support expansion of programmes such as NYOTA to include all youth up to 35 years",
-      "Promote transparent county-level youth fund portals to track applications, approvals and disbursements",
-      "Increase financial literacy and business development support for youth-led enterprises",
-      "Strengthen market linkages so funded youth businesses can scale sustainably",
+      "Reform YEDF eligibility — remove title deed barriers",
+      "Digital assets as YEDF & NYOTA eligible investments",
+      "Raise NYOTA age ceiling from 29 to 35",
+      "Transparent county-level youth fund portals",
     ],
   },
   {
-    icon: "🏛️",
+    icon: "landmark",
     title: "Youth in Every Room",
     color: "#7B0000",
     items: [
-      "Institutionalize meaningful youth participation in national and county planning and budget processes",
-      "Publish an Annual Youth State of the Nation Report highlighting progress, challenges and recommendations",
-      "Advocate for structured youth advisory representation across all 47 counties",
-      "Establish a formal intergenerational policy dialogue mechanism to engage young people and decision-makers",
-      "Strengthen the National Youth Council as an accountable and effective voice for all Kenyan youth",
-      "Promote civic education so young people understand and influence public policy",
+      "NYC representation in national budget process",
+      "Annual Youth State of the Nation Report",
+      "Youth reps on all 47 county executive committees",
+      "Formal Gen Z Policy Dialogue mechanism",
     ],
   },
   {
-    icon: "❤️",
+    icon: "heart",
     title: "Whole-Person Leadership",
     color: "#2E7D52",
     items: [
-      "Elevate youth mental health and psychosocial support as a national priority",
-      "Promote ward-level peer support and mentorship networks across the country",
-      "Integrate social media literacy, digital citizenship and responsible online engagement into youth programmes",
-      "Advocate for gender-responsive and inclusive audits of all youth programmes",
-      "Support sports, arts and community service as pathways for leadership development",
-      "Champion integrity, accountability and values-based leadership among young people",
+      "Youth mental health as national NYC priority",
+      "Ward-level peer support structures nationwide",
+      "Social media literacy in Ajira & TVET curricula",
+      "Gender equity audits of all youth programmes",
     ],
   },
 ];
@@ -110,7 +117,7 @@ const TESTIMONIALS: Testimonial[] = [
 ];
 
 const MARQUEE_TEXT = [
-  "YOUTH VOICE", "YOUTH POWER", "A BETTER TOMORROW", "SISI NI PAMOJA",
+  "YOUTH VOICE", "YOUTH POWER", "BETTER TOMORROW", "SISI NI PAMOJA",
   "MAKINA WARD", "KIBRA CONSTITUENCY", "NATIONAL YOUTH COUNCIL",
   "5 JULY 2026", "REGISTER & VOTE", "ONE NATION ONE FUTURE",
 ];
@@ -126,6 +133,32 @@ function useReveal() {
     els.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
   }, []);
+}
+
+// ── Motion Variants ────────────────────────────────────────────────────────
+const fadeInUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.25, 0.4, 0.25, 1] } }
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.1 } }
+};
+
+// ── Animated Section Wrapper ────────────────────────────────────────────────
+function AnimatedSection({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return (
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-100px" }}
+      variants={staggerContainer}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
 }
 
 // ── Counter component ──────────────────────────────────────────────────────
@@ -159,11 +192,73 @@ export default function Home() {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [scrolled, setScrolled] = useState(false);
 
+  // Form State
+  const [formData, setFormData] = useState({ name: "", phone: "", interest: "", message: "" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+  const [supporterCount, setSupporterCount] = useState<number | null>(null);
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Fetch supporter count (simulated or real from Supabase)
+  useEffect(() => {
+    async function fetchStats() {
+      try {
+        const { count, error } = await supabase
+          .from('contacts')
+          .select('*', { count: 'exact', head: true });
+        
+        if (!error && count !== null) {
+          setSupporterCount(150 + count); // Offset for base supporters
+        } else {
+          setSupporterCount(150); // Fallback
+        }
+      } catch (e) {
+        setSupporterCount(150);
+      }
+    }
+    fetchStats();
+  }, []);
+
+  const handleFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
+    setSubmitStatus("idle");
+
+    try {
+      const { error } = await supabase
+        .from('contacts')
+        .insert([
+          { 
+            name: formData.name, 
+            phone: formData.phone, 
+            interest: formData.interest, 
+            message: formData.message 
+          }
+        ]);
+
+      if (error) throw error;
+
+      setSubmitStatus("success");
+      setFormData({ name: "", phone: "", interest: "", message: "" });
+      
+      // Update local count
+      if (supporterCount !== null) setSupporterCount(supporterCount + 1);
+
+      setTimeout(() => setSubmitStatus("idle"), 5000);
+    } catch (err) {
+      console.error(err);
+      setSubmitStatus("error");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div className="min-h-screen">
@@ -250,7 +345,7 @@ export default function Home() {
           <div>
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold tracking-widest mb-8"
               style={{ background: "rgba(212,160,23,0.15)", color: "#D4A017", border: "1px solid rgba(212,160,23,0.3)" }}>
-              🗳️ NATIONAL YOUTH COUNCIL ELECTION 2026
+              <Vote className="w-4 h-4" /> NATIONAL YOUTH COUNCIL ELECTION 2026
             </div>
 
             <h1 className="font-display leading-none mb-4" style={{ fontSize: "clamp(3rem,8vw,7rem)" }}>
@@ -261,13 +356,13 @@ export default function Home() {
             </h1>
 
             <p className="font-serif text-xl md:text-2xl mb-8 italic" style={{ color: "rgba(255,255,255,0.8)" }}>
-              A Better Tomorrow for every young Kenyan.
+              Better Tomorrow, for every young Kenyan.
             </p>
 
             <div className="mb-8">
               <div className="font-display text-2xl md:text-3xl text-white mb-1">RICHARD MIRUKA</div>
               <div className="text-sm tracking-widest" style={{ color: "#D4A017" }}>
-                SOFTWARE ENGINEER  •  TECHNICAL MENTOR  •  YOUTH LEADER
+                SOFTWARE ENGINEER  •  ICT INSTRUCTOR  •  YOUTH LEADER
               </div>
             </div>
 
@@ -326,11 +421,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
-          <div className="text-xs tracking-widest" style={{ color: "rgba(255,255,255,0.5)" }}>SCROLL</div>
-          <div className="w-px h-8" style={{ background: "rgba(212,160,23,0.5)" }} />
-        </div>
       </section>
 
       {/* ── MARQUEE TICKER ─────────────────────────────────────────────── */}
@@ -339,7 +429,7 @@ export default function Home() {
           {[...MARQUEE_TEXT, ...MARQUEE_TEXT].map((t, i) => (
             <span key={i} className="font-display text-sm tracking-widest px-6 flex-shrink-0"
               style={{ color: "#0D1B40" }}>
-              {t} <span className="opacity-40 mx-2">✦</span>
+              {t}
             </span>
           ))}
         </div>
@@ -351,7 +441,7 @@ export default function Home() {
           <div className="reveal text-center mb-12">
             <div className="font-display text-4xl md:text-5xl text-white mb-3">THE CRISIS WE MUST NAME</div>
             <p className="text-gray-400 max-w-2xl mx-auto">
-              Kenya cannot afford polite conversations about a crisis that is burning. These are the real numbers; and every one represents a young Kenyan whose potential is being wasted.
+              Kenya cannot afford polite conversations about a crisis that is burning. These are the numbers — and every one represents a young Kenyan whose potential is being wasted.
             </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-0 border border-white/10 rounded-xl overflow-hidden">
@@ -374,27 +464,27 @@ export default function Home() {
             </div>
             <h2 className="font-display text-5xl md:text-6xl mb-6 leading-tight"
               style={{ color: "var(--navy)" }}>
-              I HAVE BEEN SHAPED<br />
-              <span style={{ color: "var(--green-deep)" }}>BY YEARS OF SERVICE IN VULNERABLE & UNDERSERVED COMMUNITIES.</span><br />
-              I AM RUNNING TO REPRESENT THE ASPIRATIONS OF <br />
-               THE YOUNG PEOPLE IN KENYA.
+              I WAS SHAPED<br />
+              <span style={{ color: "var(--green-deep)" }}>BY KIBERA.</span><br />
+              I AM RUNNING<br />
+              FOR ALL OF KENYA.
             </h2>
             <p className="text-gray-600 text-lg leading-relaxed mb-6">
-              I am a <strong>Full Stack Software Engineer, Technical Mentor</strong> and community volunteer. I have spent five years supporting literacy and digital skills in Kenya — From Web development, networking, cybersecurity, and ICT fundamentals — watching young people transform when they get real tools.
+              I am a <strong>Full Stack Software Engineer, ICT Instructor</strong> and community volunteer. I have spent three years teaching digital skills at Ta'awun Trust Vocational College — web development, cybersecurity, and ICT fundamentals — watching young people transform when they get real tools.
             </p>
             <p className="text-gray-600 text-lg leading-relaxed mb-8">
-              I have organized youth meetups and dialogues, led youth communities, volunteered in schools and scholarship drives, and mentored young people without waiting for permission. <strong>Service without a title has been my career. I am now seeking an opportunity to scale that service nationally.</strong>
+              I have organised football tournaments, led youth chairs, volunteered in food distribution and scholarship drives, and mentored young people without waiting for permission. <strong>Service without a title has been my career. I am now seeking a title to scale that service nationally.</strong>
             </p>
             <div className="grid grid-cols-2 gap-4">
               {[
-                { icon: "💻", label: "Software Engineer", sub: "Full Stack Development" },
-                { icon: "📚", label: "ICT Instructor", sub: "Digital Skills Training" },
-                { icon: "⚽", label: "Community Leader", sub: "Youth Leadership & Empowerment" },
-                { icon: "🎓", label: "Technical Mentor", sub: "Career & Skills Development" },
+                { icon: Laptop, label: "Software Engineer",    sub: "Full Stack" },
+                { icon: BookOpen, label: "ICT Instructor",       sub: "Ta'awun Trust" },
+                { icon: Trophy, label: "Community Leader",     sub: "Football & Youth" },
+                { icon: PenTool, label: "Technical Mentor",     sub: "Digital Skills" },
               ].map((item, i) => (
                 <div key={i} className="flex items-center gap-3 p-4 rounded-xl"
                   style={{ background: "var(--green-light)" }}>
-                  <span className="text-2xl">{item.icon}</span>
+                  <item.icon className="w-6 h-6" style={{ color: "var(--green-deep)" }} />
                   <div>
                     <div className="font-semibold text-sm" style={{ color: "var(--navy)" }}>{item.label}</div>
                     <div className="text-xs text-gray-500">{item.sub}</div>
@@ -449,23 +539,23 @@ export default function Home() {
               MY NATIONAL VISION
             </div>
             <h2 className="font-serif text-3xl md:text-5xl leading-tight mb-8" style={{ color: "white" }}>
-              "A Kenya where every young person regardless of county, gender, disability or economic background — has access to the skills, capital, connectivity and civic space to build a dignified life and shape the nation's future."
+              "A Kenya where every young person — regardless of county, gender, disability or economic background — has access to the skills, capital, connectivity and civic space to build a dignified life and shape the nation's future."
             </h2>
             <p className="text-lg mb-12" style={{ color: "rgba(255,255,255,0.7)" }}>
               Grounded in the <strong className="text-white">National Youth Council Act, Cap. 132</strong>. 
               Powered by Kenya's <strong className="text-white">Digital Superhighway</strong>. 
-              For every county, constituency and every ward. For each and every young Kenyan.
+              For every county. For every ward. For every young Kenyan.
             </p>
           </div>
           <div className="reveal reveal-d2 grid md:grid-cols-3 gap-6">
             {[
-              { icon: "⚖️", title: "Legally Grounded", body: "Every commitment traces directly to the NYC Act Section 5 mandates. Not political promises but statutory obligations." },
-              { icon: "📡", title: "Tech-Powered",     body: "The Digital Superhighway is Kenya's biggest youth investment. My mission is to ensure it reaches every ward, not just in the towns & cities." },
-              { icon: "🌍", title: "Nationally Scaled", body: "This campaign starts in the grassroot level in Makina but the agenda is for all 47 counties. No young Kenyan is left behind." },
+              { icon: Scale, title: "Legally Grounded", body: "Every commitment traces directly to the NYC Act Section 5 mandates. Not political promises, statutory obligations." },
+              { icon: Wifi, title: "Tech-Powered",     body: "The Digital Superhighway is Kenya's biggest youth investment. My mission: ensure it reaches every ward, not just cities." },
+              { icon: Globe, title: "Nationally Scaled", body: "This campaign starts in Makina but the agenda is for all 47 counties. No young Kenyan left behind." },
             ].map((item, i) => (
               <div key={i} className="p-6 rounded-xl text-left"
                 style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.12)" }}>
-                <div className="text-3xl mb-3">{item.icon}</div>
+                <item.icon className="w-8 h-8 mb-3" style={{ color: "#D4A017" }} />
                 <div className="font-bold text-lg text-white mb-2">{item.title}</div>
                 <div className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.7)" }}>{item.body}</div>
               </div>
@@ -486,7 +576,7 @@ export default function Home() {
               MY NATIONAL AGENDA
             </h2>
             <p className="text-gray-500 max-w-2xl mx-auto">
-              I have five priorities. Each grounded in law, data and lived experience. Measurable. Accountable. For every county in Kenya.
+              Five priorities. Each grounded in law, data and lived experience. Measurable. Accountable. For every county in Kenya.
             </p>
           </div>
           <div className="space-y-6">
@@ -497,7 +587,14 @@ export default function Home() {
                   {/* Left accent */}
                   <div className="flex flex-col items-center justify-center p-8 text-white"
                     style={{ background: pillar.color }}>
-                    <div className="text-5xl mb-2">{pillar.icon}</div>
+                    {iconMap[pillar.icon] && (
+                      <div className="mb-2">
+                        {(() => {
+                          const Icon = iconMap[pillar.icon];
+                          return <Icon className="w-10 h-10" strokeWidth={1.5} />;
+                        })()}
+                      </div>
+                    )}
                     <div className="font-display text-xl text-center leading-tight">{pillar.title}</div>
                     <div className="font-display text-4xl mt-2 opacity-30">0{i + 1}</div>
                   </div>
@@ -532,7 +629,7 @@ export default function Home() {
           <a href="/manifesto.pdf" download
             className="inline-flex items-center gap-3 px-10 py-4 rounded-lg font-bold text-lg transition-all duration-300 hover:scale-105 shadow-xl"
             style={{ background: "#0D1B40", color: "white" }}>
-            📄 Download Manifesto (PDF)
+            <FileText className="w-5 h-5" /> Download Manifesto (PDF)
           </a>
           <p className="mt-4 text-sm" style={{ color: "rgba(13,27,64,0.6)" }}>
             Also available in Swahili. Contact the campaign team for a printed copy.
@@ -603,40 +700,54 @@ export default function Home() {
           </div>
 
           {/* Featured testimonial */}
-          <div className="reveal mb-12 rounded-2xl overflow-hidden shadow-xl grid md:grid-cols-2"
-            style={{ background: "var(--navy)" }}>
-            {/* Video placeholder */}
-            <div className="relative bg-black aspect-video md:aspect-auto flex items-center justify-center group cursor-pointer"
-              style={{ background: "linear-gradient(135deg, #1A5C38, #0D1B40)" }}
+          <div className="reveal mb-12 rounded-2xl overflow-hidden shadow-2xl grid md:grid-cols-2"
+            style={{ background: "rgba(255, 255, 255, 0.03)", border: "1px solid rgba(255, 255, 255, 0.1)" }}>
+            {/* Video Section */}
+            <div className="relative bg-black aspect-video md:aspect-auto flex items-center justify-center group cursor-pointer overflow-hidden"
               onClick={() => window.open(TESTIMONIALS[activeTestimonial].videoUrl, "_blank")}>
-              <div className="text-center">
-                <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 transition-transform duration-300 group-hover:scale-110"
-                  style={{ background: "rgba(212,160,23,0.2)", border: "2px solid #D4A017" }}>
+              <div className="absolute inset-0 opacity-40 group-hover:opacity-60 transition-opacity duration-700"
+                style={{ background: "linear-gradient(135deg, #1A5C38, #0D1B40)" }} />
+              
+              {/* Animated pulses */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-24 h-24 rounded-full animate-ping opacity-20" style={{ background: "#D4A017" }} />
+              </div>
+
+              <div className="relative z-10 text-center px-6">
+                <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 transition-all duration-500 group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(212,160,23,0.4)]"
+                  style={{ background: "rgba(13, 27, 64, 0.8)", border: "2px solid #D4A017" }}>
                   <div className="w-0 h-0 ml-2" style={{
                     borderTop: "16px solid transparent",
                     borderBottom: "16px solid transparent",
                     borderLeft: "24px solid #D4A017"
                   }} />
                 </div>
-                <p className="text-white font-semibold">Watch Testimonial</p>
-                <p className="text-xs mt-1" style={{ color: "rgba(212,160,23,0.8)" }}>
-                  {TESTIMONIALS[activeTestimonial].name} — {TESTIMONIALS[activeTestimonial].location}
+                <div className="font-display text-2xl text-white tracking-wider mb-2">HEAR THE IMPACT</div>
+                <p className="text-sm font-medium" style={{ color: "#D4A017" }}>
+                  {TESTIMONIALS[activeTestimonial].name} · {TESTIMONIALS[activeTestimonial].location}
                 </p>
-                <p className="text-xs mt-2 px-4" style={{ color: "rgba(255,255,255,0.4)" }}>
-                  Video will be available once uploaded to Google Drive
-                </p>
+                <div className="mt-4 inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-bold tracking-[0.2em] uppercase border border-white/20 bg-white/5">
+                  <div className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+                  Upcoming Feature
+                </div>
               </div>
             </div>
             {/* Quote */}
-            <div className="p-10 flex flex-col justify-center">
-              <div className="font-display text-5xl mb-4" style={{ color: "#D4A017" }}>"</div>
-              <p className="font-serif text-lg md:text-xl text-white leading-relaxed italic mb-8">
+            <div className="p-12 flex flex-col justify-center relative overflow-hidden">
+              <div className="absolute top-0 right-0 p-8 opacity-5">
+                <Users className="w-32 h-32 text-white" />
+              </div>
+              <div className="font-display text-6xl mb-6 leading-none" style={{ color: "#D4A017" }}>"</div>
+              <p className="font-serif text-xl md:text-2xl text-white leading-relaxed italic mb-10 relative z-10">
                 {TESTIMONIALS[activeTestimonial].quote}
               </p>
-              <div>
-                <div className="font-bold text-white">{TESTIMONIALS[activeTestimonial].name}</div>
-                <div className="text-sm" style={{ color: "#D4A017" }}>
-                  {TESTIMONIALS[activeTestimonial].role} · {TESTIMONIALS[activeTestimonial].location}
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-1 border-t-2" style={{ borderColor: "#D4A017" }} />
+                <div>
+                  <div className="font-display text-xl text-white tracking-wide uppercase">{TESTIMONIALS[activeTestimonial].name}</div>
+                  <div className="text-sm font-medium" style={{ color: "#D4A017" }}>
+                    {TESTIMONIALS[activeTestimonial].role}
+                  </div>
                 </div>
               </div>
             </div>
@@ -715,7 +826,7 @@ export default function Home() {
               style={{ background: "#D4A017", color: "#0D1B40" }}>
               Register at NYC Website →
             </a>
-            <a href="tel:+254700129706"
+            <a href="tel:+254700000000"
               className="px-10 py-4 rounded-xl font-bold text-lg border-2 text-white transition-all duration-300 hover:bg-white/10"
               style={{ borderColor: "rgba(255,255,255,0.4)" }}>
               Call the Campaign Team
@@ -735,14 +846,14 @@ export default function Home() {
             {/* Contact info */}
             <div className="space-y-6">
               {[
-                { icon: "📍", label: "Campaign Base",   value: "Makina Ward, Kibera, Nairobi" },
-                { icon: "📱", label: "WhatsApp",         value: "+254700129706" },
-                { icon: "📧", label: "Email",            value: "richard.miruka.dev@gmail.com" },
-                { icon: "🌐", label: "Website",          value: "richardmiruka.pw" },
+                { icon: MapPin, label: "Campaign Base",   value: "Makina Ward, Kibera, Nairobi" },
+                { icon: Phone, label: "WhatsApp",         value: "+254 [NUMBER]" },
+                { icon: Mail, label: "Email",            value: "campaign@richardmiruka.co.ke" },
+                { icon: Globe, label: "Website",          value: "richardmiruka.co.ke" },
               ].map((item, i) => (
                 <div key={i} className="flex items-start gap-4 p-4 rounded-xl"
                   style={{ background: "var(--green-light)" }}>
-                  <span className="text-2xl">{item.icon}</span>
+                  <item.icon className="w-6 h-6" style={{ color: "var(--green-deep)" }} />
                   <div>
                     <div className="text-xs font-bold tracking-widest mb-1" style={{ color: "var(--green-deep)" }}>{item.label}</div>
                     <div className="font-semibold text-gray-700">{item.value}</div>
@@ -751,10 +862,9 @@ export default function Home() {
               ))}
               <div className="flex gap-4 pt-4">
                 {[
-                  { label: "X / Twitter", href: "https://twitter.com/richardmiruka96" },
-                  { label: "Instagram", href: "https://www.instagram.com/richard.miruka.onsare/" }, 
-                  { label: "TikTok",      href: "https://tiktok.com/@richy_miruka96" },
-                  { label: "LinkedIn", href: "https://www.linkedin.com/in/richard-miruka-05083b147/" },
+                  { label: "X / Twitter", href: "https://twitter.com/richardmiruka" },
+                  { label: "Instagram",   href: "https://instagram.com/richardmiruka" },
+                  { label: "TikTok",      href: "https://tiktok.com/@richardmiruka" },
                 ].map((s, i) => (
                   <a key={i} href={s.href} target="_blank" rel="noopener noreferrer"
                     className="flex-1 text-center py-3 rounded-lg text-sm font-bold transition-all duration-200 hover:scale-105"
@@ -807,7 +917,7 @@ export default function Home() {
               <div className="font-display text-3xl text-white mb-2">RICHARD MIRUKA</div>
               <div className="text-xs tracking-widest mb-6" style={{ color: "#D4A017" }}>NATIONAL YOUTH COUNCIL 2026</div>
               <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.5)" }}>
-                Software Engineer. Technical Mentor. Youth Leader. Running to bring technical credibility, grassroots accountability and genuine youth advocacy to the National Youth Council.
+                Software Engineer. ICT Instructor. Youth Leader. Running to bring technical credibility, grassroots accountability and genuine youth advocacy to the National Youth Council.
               </p>
             </div>
             {/* Links */}
@@ -848,7 +958,7 @@ export default function Home() {
               © 2026 Richard Miruka Campaign. All rights reserved. | Grounded in the National Youth Council Act, Cap. 132
             </div>
             <div className="font-display text-sm" style={{ color: "#D4A017" }}>
-              SISI NI VIJANA PAMOJA · ONE VOICE · ONE MOVEMENT · ONE KENYA · ONE FUTURE
+              SISI NI PAMOJA · ONE WARD · ONE CONSTITUENCY · ONE NATION · ONE FUTURE
             </div>
           </div>
         </div>

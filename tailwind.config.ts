@@ -19,6 +19,16 @@ const config: Config = {
         serif:   ["'Playfair Display'", "serif"],
         sans:    ["'DM Sans'", "sans-serif"],
       },
+      animation: {
+        'marquee': 'marquee 30s linear infinite',
+        'ping-slow': 'ping 2s cubic-bezier(0, 0, 0.2, 1) infinite',
+      },
+      keyframes: {
+        marquee: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
+      },
     },
   },
   plugins: [],
