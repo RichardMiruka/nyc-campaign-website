@@ -8,6 +8,9 @@ import {
   FileText, MapPin, Phone, Mail, Laptop, PenTool, Users,
   ArrowRight, CheckCircle2, AlertCircle
 } from "lucide-react";
+import dynamic from 'next/dynamic';
+const Lottie = dynamic(() => import('lottie-react'), { ssr: false });
+import ballotAnimation from "@/public/ballot.json";
 import { supabase } from "@/lib/supabase";
 
 // ── Icon mapping ───────────────────────────────────────────────────────────
@@ -129,7 +132,7 @@ const fadeInUp = {
     opacity: 1, 
     y: 0, 
     filter: "blur(0px)",
-    transition: { duration: 1, ease: [0.32, 0.72, 0, 1] } 
+    transition: { duration: 1, ease: [0.32, 0.72, 0, 1] as any } 
   }
 };
 
@@ -140,7 +143,7 @@ const staggerContainer = {
     transition: { 
       staggerChildren: 0.12, 
       delayChildren: 0.1,
-      ease: [0.32, 0.72, 0, 1]
+      ease: [0.32, 0.72, 0, 1] as any
     } 
   }
 };
@@ -150,7 +153,7 @@ const navItemVariants = {
   visible: { 
     opacity: 1, 
     y: 0, 
-    transition: { duration: 0.8, ease: [0.32, 0.72, 0, 1] } 
+    transition: { duration: 0.8, ease: [0.32, 0.72, 0, 1] as any } 
   }
 };
 
