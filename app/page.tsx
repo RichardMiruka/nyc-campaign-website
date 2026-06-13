@@ -11,6 +11,7 @@ import {
 import dynamic from 'next/dynamic';
 const Lottie = dynamic(() => import('lottie-react'), { ssr: false });
 import ballotAnimation from "@/public/ballot.json";
+import voteMeAnimation from "@/public/voteme.json";
 import { supabase } from "@/lib/supabase";
 
 // ── Icon mapping ───────────────────────────────────────────────────────────
@@ -436,13 +437,29 @@ export default function Home() {
             </motion.div>
           </motion.div>
 
-          {/* Right: candidate image */}
+          {/* Right: candidate image and vote animation */}
           <motion.div 
             initial={{ opacity: 0, scale: 0.9, rotate: 2 }}
             animate={{ opacity: 1, scale: 1, rotate: 0 }}
             transition={{ duration: 1.5, ease: [0.32, 0.72, 0, 1], delay: 0.2 }}
-            className="relative flex justify-center lg:justify-end"
+            className="relative flex flex-col items-center lg:items-end gap-6"
           >
+            {/* Vote Me Animation */}
+            <motion.div 
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.8, duration: 1, type: "spring", stiffness: 200 }}
+              className="doppelrand !rounded-full w-24 h-24 absolute -top-12 -left-6 lg:left-0 z-20"
+            >
+              <div className="doppelrand-inner !rounded-full bg-navy/80 p-2">
+                <Lottie 
+                  animationData={voteMeAnimation} 
+                  loop={true} 
+                  className="w-full h-full"
+                />
+              </div>
+            </motion.div>
+
             <div className="doppelrand w-full max-w-[440px] aspect-[3/4]">
               <div className="doppelrand-inner">
                 <Image src="/richard-miruka.png" alt="Richard Miruka"
