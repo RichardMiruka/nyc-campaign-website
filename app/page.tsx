@@ -11,7 +11,7 @@ import {
 import dynamic from 'next/dynamic';
 const Lottie = dynamic(() => import('lottie-react'), { ssr: false });
 import ballotAnimation from "@/public/ballot.json";
-import voteMeAnimation from "@/public/voteme.json";
+import HeroAsciiAnimation from "@/components/ui/hero-ascii-one";
 import { supabase } from "@/lib/supabase";
 
 // ── Icon mapping ───────────────────────────────────────────────────────────
@@ -173,10 +173,16 @@ function AnimatedSection({ children, className = "" }: { children: React.ReactNo
   );
 }
 
-// ── Counter component ──────────────────────────────────────────────────────
+// ── Counter component with bar graph ───────────────────────────────────────
 function AnimatedStat({ value, label, source, className = "" }: Stat & { className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
+  
+  // Extract numeric part for graph (handle "800K+" and "26M" or "67%")
+  const numericValue = parseFloat(value.replace(/[^0-9.]/g, ''));
+  const maxValue = 100; // Assuming 100 as base for percentage-based stats
+  const percentage = Math.min((numericValue / maxValue) * 100, 100);
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([e]) => { if (e.isIntersecting) setVisible(true); },
@@ -185,14 +191,28 @@ function AnimatedStat({ value, label, source, className = "" }: Stat & { classNa
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
   }, []);
+  
   return (
-    <div ref={ref} className={`p-8 h-full flex flex-col justify-center ${className}`}>
-      <div className={`font-display text-5xl md:text-7xl transition-all duration-1000 ease-[cubic-bezier(0.32,0.72,0,1)] ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8 blur-md"}`}
-        style={{ color: "#D4A017" }}>
-        {value}
+    <div ref={ref} className={`p-8 h-full flex flex-col justify-between ${className}`}>
+      <div className="flex justify-between items-start gap-4">
+        <div className={`font-display text-5xl md:text-7xl transition-all duration-1000 ease-[cubic-bezier(0.32,0.72,0,1)] ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8 blur-md"}`}
+          style={{ color: "#D4A017" }}>
+          {value}
+        </div>
+        
+        {/* Trader-style Bar Graph */}
+        <div className="w-16 h-12 flex items-end gap-1 bg-white/5 p-1 rounded-sm">
+          <div 
+            className="w-full bg-gold/50 transition-all duration-[2s] ease-[cubic-bezier(0.32,0.72,0,1)]"
+            style={{ height: visible ? `${percentage}%` : '0%' }}
+          />
+        </div>
       </div>
-      <div className="text-white font-bold mt-3 text-sm md:text-lg tracking-tight leading-tight">{label}</div>
-      <div className="text-gray-400 text-xs mt-2 font-medium opacity-60 uppercase tracking-widest">{source}</div>
+      
+      <div className="mt-6">
+        <div className="text-white font-bold text-sm md:text-lg tracking-tight leading-tight">{label}</div>
+        <div className="text-gray-400 text-xs mt-2 font-medium opacity-60 uppercase tracking-widest">{source}</div>
+      </div>
     </div>
   );
 }
@@ -972,7 +992,7 @@ export default function Home() {
               <motion.div 
                 key={i}
                 initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
+              whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1, duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
                 className="doppelrand !rounded-[2rem]"
