@@ -774,7 +774,7 @@ export default function Home() {
             
             <div className="space-y-12">
               {[
-                { step: "01", date: "NOW → JUNE 2026", title: "VOTER REGISTRATION",     body: "Register through your ward youth officer or nationalyouthcouncil.go.ke. Mandatory for ages 18–35.", color: "#1A5C38",  cta: "Register Now",      href: "https://nationalyouthcouncil.go.ke" },
+                { step: "01", date: "NOW → JUNE 2026", title: "VOTER REGISTRATION",     body: "Register through your ward youth officer or NYC website. Mandatory for ages 18–35.", color: "#1A5C38",  cta: "Register Now",      href: "https://nationalyouthcouncil.go.ke/nyc-elections/" },
                 { step: "02", date: "PRE-5 JULY 2026", title: "NOMINATIONS — FORM 1",  body: "Richard needs 50 signatures from registered Makina Ward voters to get on the ballot. Support the nomination.", color: "#2E7D52",  cta: "Sign Form 1",        href: "#contact" },
                 { step: "03", date: "5 JULY 2026",     title: "WARD ELECTIONS",         body: "Registered youth in Makina Ward vote for delegates. Polls open 8am–5pm. Bring National ID.", color: "#D4A017",  cta: "Ward Polls",  href: "#register" },
                 { step: "04", date: "16 JULY 2026",    title: "CONSTITUENCY ELECTIONS", body: "Ward delegates elect two Kibra Constituency delegates — for the National Youth Congress.", color: "#B8860B",  cta: "Kibra Level", href: "#register" },
@@ -923,7 +923,21 @@ export default function Home() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(212,160,23,0.1)_0%,transparent_60%)] pointer-events-none" />
         
         <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
-          <AnimatedSection>
+          <AnimatedSection className="flex flex-col items-center">
+            {/* Ballot Animation with Double-Bezel Tray */}
+            <motion.div 
+              variants={fadeInUp}
+              className="doppelrand mb-12 w-32 h-32 md:w-48 md:h-48 !rounded-full overflow-hidden"
+            >
+              <div className="doppelrand-inner !rounded-full bg-navy/50 flex items-center justify-center p-4">
+                <Lottie 
+                  animationData={ballotAnimation} 
+                  loop={true} 
+                  className="w-full h-full"
+                />
+              </div>
+            </motion.div>
+
             <motion.h2 variants={fadeInUp} className="font-display text-7xl md:text-9xl mb-8 leading-[0.85] tracking-tighter uppercase">
               Your Vote is <br/> <span className="text-gradient-gold">Your Power.</span>
             </motion.h2>
@@ -934,7 +948,7 @@ export default function Home() {
 
           <div className="grid md:grid-cols-3 gap-6 mb-20">
             {[
-              { step: "1", action: "REGISTER", detail: "At your ward youth officer or nationalyouthcouncil.go.ke", color: "var(--green-deep)" },
+              { step: "1", action: "REGISTER", detail: "At your ward youth officer or NYC website", color: "var(--green-deep)" },
               { step: "2", action: "NOMINATE", detail: "Sign Form 1 to get Richard on the Makina Ward ballot", color: "var(--gold)" },
               { step: "3", action: "VOTE",     detail: "Show up on 5 July 2026 · 8am–5pm · Bring ID",     color: "#CE1126" },
             ].map((item, i) => (
@@ -946,7 +960,7 @@ export default function Home() {
                 transition={{ delay: i * 0.1, duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
                 className="doppelrand !rounded-[2rem]"
               >
-                <div className="doppelrand-inner !rounded-[calc(2rem-1.5px)] p-10">
+                <div className="doppelrand-inner !rounded-[calc(2rem-1.5px)] p-10 h-full">
                   <div className="font-display text-6xl mb-4" style={{ color: item.color }}>{item.step}</div>
                   <div className="font-display text-2xl text-white mb-4 tracking-tight uppercase">{item.action}</div>
                   <p className="text-sm text-white/40 leading-relaxed">{item.detail}</p>
@@ -956,8 +970,14 @@ export default function Home() {
           </div>
 
           <AnimatedSection className="flex flex-col sm:flex-row gap-6 justify-center">
-            <motion.a variants={fadeInUp} href="https://nationalyouthcouncil.go.ke" target="_blank" rel="noopener noreferrer" className="btn-premium">
-              <span>Register at NYC Website</span>
+            <motion.a 
+              variants={fadeInUp} 
+              href="https://nationalyouthcouncil.go.ke/nyc-elections/" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="btn-premium"
+            >
+              <span>Register for NYC Elections</span>
               <div className="btn-premium-icon">
                 <Globe className="w-4 h-4 text-white" />
               </div>
@@ -1026,10 +1046,12 @@ export default function Home() {
                 <select required
                   value={formData.interest} onChange={e => setFormData({...formData, interest: e.target.value})}
                   className="w-full px-6 py-4 rounded-full bg-white/5 border border-white/10 text-white/50 outline-none focus:border-gold transition-colors text-sm appearance-none">
-                  <option value="">I want to...</option>
-                  <option value="volunteer">Volunteer</option>
-                  <option value="nominate">Sign Nomination</option>
-                  <option value="manifesto">Get Manifesto</option>
+                  <option value="" disabled>I want to...</option>
+                  <option value="volunteer">Volunteer for the campaign</option>
+                  <option value="nominate">Sign the nomination form</option>
+                  <option value="manifesto">Get a printed manifesto</option>
+                  <option value="media">Media / podcast inquiry</option>
+                  <option value="other">Something else</option>
                 </select>
                 <textarea rows={4} placeholder="Message" required
                   value={formData.message} onChange={e => setFormData({...formData, message: e.target.value})}
